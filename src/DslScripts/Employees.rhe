@@ -23,7 +23,7 @@ Module Bookstore
         ShortString Name;
     }
     Entity EmployeeDepartment
-    {  
+    {   
         Reference Employee{Required;}
         Reference Department {Required;}
     }

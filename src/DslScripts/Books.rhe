@@ -42,7 +42,7 @@ Module Bookstore
     {
         Reference Book { Required; }
         Reference Topic { Required; }
-
+ 
         UniqueMultiple 'Book Topic';
     }    
 }
