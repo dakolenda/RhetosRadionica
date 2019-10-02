@@ -3,9 +3,9 @@ Module Bookstore
     Entity Book
     {
         ShortString Code { AutoCode; }
-        ShortString Title;
-        Integer NumberOfPages;
-
+        ShortString Title {Required;}
+        Integer NumberOfPages {MinValue 10; MaxValue 2000;}
+        DateTime DateCreated { CreationTime; }
         ItemFilter CommonMisspelling 'book => book.Title.Contains("curiousity")';
         InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity".';
 
@@ -44,5 +44,30 @@ Module Bookstore
         Reference Topic { Required; }
  
         UniqueMultiple 'Book Topic';
-    }    
+    }  
+    Browse NasloviIAutori Bookstore.Book  
+    {
+        Take Title;
+        Take AuthorName 'Author.Name';
+        Take OriginalLanguage 'Extension_ForeignBook.OriginalLanguage';
+    }
+    SqlQueryable BookInfo
+    "
+        SELECT
+            b.ID,
+            b.Title,
+            NumberOfComments = COUNT(c.ID)
+        FROM
+            Bookstore.Book b
+            LEFT JOIN Bookstore.Comment c ON c.BookID = b.ID
+        GROUP BY
+            b.ID,b.Title
+    "
+    {
+        Extends Bookstore.Book;
+        ShortString Title;
+        Integer NumberOfComments;
+
+        AutodetectSqlDependencies;
+    }
 }
