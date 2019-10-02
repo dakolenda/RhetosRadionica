@@ -12,18 +12,18 @@ Module Bookstore
         Reference Author Bookstore.Person;
         Logging;
     }
-
     Entity Person
     {
         ShortString Name;        
     }
-
+    //One to Many
     Entity Comment{
         Reference Book {Detail;}
         LongString Text;
     }
-
-    Entity ChildrensBook{
+    //One to One
+    Entity ChildrensBook
+    {
         Extends Bookstore.Book;
         Integer AgeFrom;
         Integer AgeTo;
@@ -33,4 +33,16 @@ Module Bookstore
         ShortString OriginalLanguage;
         Reference Translator Bookstore.Person;
     }
+    Entity Topic
+    {
+        ShortString Name {Unique; Required;}
+    }
+    //Many to Many
+    Entity BookTopic
+    {
+        Reference Book { Required; }
+        Reference Topic { Required; }
+
+        UniqueMultiple 'Book Topic';
+    }    
 }
