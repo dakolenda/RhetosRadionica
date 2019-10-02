@@ -36,7 +36,7 @@ Module Bookstore
     Entity Topic
     {
         ShortString Name {Unique; Required;}
-    }
+    } 
     //Many to Many
     Entity BookTopic
     {
